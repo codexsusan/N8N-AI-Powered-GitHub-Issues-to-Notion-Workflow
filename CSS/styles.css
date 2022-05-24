@@ -1,0 +1,90 @@
+#title {
+  background-color: #ff4c68;
+  z-index: -1;
+}
+
+h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 3rem;
+  line-height: 1.5;
+  font-weight: bolder;
+}
+
+.iphone6 {
+  transform: rotate(90deg);
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -moz-transform: rotate(90deg); /* Firefox */
+  -webkit-transform: rotate(90deg); /* Safari and Chrome */
+  -o-transform: rotate(90deg);
+}
+
+#brand-name {
+  font-family: "Ubuntu";
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.title-image {
+  width: 60%;
+  transform: rotate(25deg);
+}
+
+#features {
+  position: relative;
+  bottom: 200px;
+}
+.feature {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#icons {
+  font-size: 4rem;
+}
+#icons:hover {
+  color: #ff4c68;
+}
+p {
+  color: #8f8f8f;
+}
+
+/* Testimonials  */
+#testimonials {
+  background-color: #ff4c68;
+  position: relative;
+  bottom: 125px;
+}
+
+#testimonial-text h2 {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.5;
+  width: 70%;
+}
+#testimonials-image {
+  width: 10%;
+  padding-right: 15px;
+}
+#press {
+  background-color: #ff4c68;
+  position: relative;
+  bottom: 125px;
+}
+
+.press-logo {
+  width: 15%;
+  margin: 20px 25px 50px 25px;
+}
+
+#cta{
+  background-color: #ff4c68;
+  font-family: "Montserrat", sans-serif;
+  line-height: 3rem;
+}
+
+.social-media a{
+  color: black;
+  text-decoration: none;
+  
+}
+
