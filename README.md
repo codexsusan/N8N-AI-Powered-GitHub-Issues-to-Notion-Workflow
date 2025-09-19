@@ -1,132 +1,180 @@
-# 🔄 AI-Powered GitHub Issues to Notion Workflow# 🔄 AI-Powered GitHub Issues to Notion Work## 🚀 Setup Instructions
+# AI-Powered GitHub Issues to Notion Workflow
 
+An intelligent n8n automation that transforms GitHub issue management by automatically syncing issues to Notion with AI-powered summarization and enrichment.
 
+![n8n Workflow Diagram](image.png)
 
-An intelligent n8n automation that transforms GitHub issue management by automatically syncing issues to Notion with AI-powered summarization and enrichment.### Prerequisites
+## 🌟 Overview
 
-- n8n instance (cloud or self-hosted)
+This workflow creates a seamless bridge between **GitHub** and **Notion**, leveraging **Google Gemini AI** to automatically process, summarize, and organize GitHub issues into a structured Notion database. Perfect for teams who want to centralize their issue tracking and project management.
 
-![n8n Workflow Diagram](image.png)- GitHub repository access
+## 🔧 How It Works
 
-- Notion workspace
+The workflow consists of 4 main components:
 
-## 🌟 Overview- Google Gemini API access
-
-
-
-This workflow creates a seamless bridge between **GitHub** and **Notion**, leveraging **Google Gemini AI** to automatically process, summarize, and organize GitHub issues into a structured Notion database. Perfect for teams who want to centralize their issue tracking and project management.### Step 1: GitHub API Setup
-
-
-
-## 🔧 How It Works1. **Generate Personal Access Token**:
-
-   - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-
-The workflow consists of 4 main components:   - Click "Generate new token (classic)"
-
-   - Name: `n8n-integration`
-
-1. **🔗 GitHub Trigger**: Monitors your repository for new or updated issues   - Scopes: Select `repo` (full repository access)
-
-2. **🤖 AI Agent**: Uses Google Gemini to intelligently summarize and structure issue data   - Copy the generated token
-
+1. **🔗 GitHub Trigger**: Monitors your repository for new or updated issues
+2. **🤖 AI Agent**: Uses Google Gemini to intelligently summarize and structure issue data
 3. **📋 Structured Output Parser**: Formats the AI response into consistent JSON structure
+4. **📊 Notion Database**: Creates organized pages with enriched issue information
 
-4. **📊 Notion Database**: Creates organized pages with enriched issue information2. **Configure n8n Credentials**:
+### Workflow Process:
 
-   - In n8n → Credentials → New Credential → GitHub API
-
-### Workflow Process:   - Authentication method: Access Token
-
-1. **Issue Detection** → GitHub webhook triggers when issues are created/updated   - Paste your token and save
-
+1. **Issue Detection** → GitHub webhook triggers when issues are created/updated
 2. **AI Processing** → Gemini AI analyzes the issue and creates:
-
-   - Concise summary### Step 2: Google Gemini API Setup
-
+   - Concise summary
    - Actionable items
-
-   - Additional context notes1. **Get API Key**:
-
-3. **Data Structuring** → Output is formatted with repository metadata   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-
-4. **Notion Creation** → Structured data becomes a new Notion database page   - Create new API key
-
-   - Copy the key
+   - Additional context notes
+3. **Data Structuring** → Output is formatted with repository metadata
+4. **Notion Creation** → Structured data becomes a new Notion database page
 
 ## 📊 Notion Database Structure
 
-2. **Configure n8n Credentials**:
-
-The workflow creates Notion pages with the following properties:   - In n8n → Credentials → New Credential → Google PaLM API
-
-   - Paste your API key and save
+The workflow creates Notion pages with the following properties:
 
 | Column Name          | Type     | Description                    |
-
-|---------------------|----------|--------------------------------|### Step 3: Notion API Setup
-
+|---------------------|----------|--------------------------------|
 | **Title**           | Title    | Issue title from GitHub       |
+| **Summary**         | Text     | AI-generated concise summary  |
+| **Action Items**    | Text     | Key tasks and next steps      |
+| **Notes**           | Text     | Additional context            |
+| **Repository**      | Text     | Repository name               |
+| **Repository URL**  | URL      | Direct link to repository     |
+| **Status**          | Select   | Issue state (open/closed)     |
+| **Last Activity**   | Date     | Last update timestamp         |
+| **Assigned To**     | Text     | GitHub assignee information   |
 
-| **Summary**         | Text     | AI-generated concise summary  |1. **Create Integration**:
+## 🚀 Setup Instructions
 
-| **Action Items**    | Text     | Key tasks and next steps      |   - Go to [Notion Integrations](https://www.notion.com/my-integrations)
+### Prerequisites
 
-| **Notes**           | Text     | Additional context            |   - Click "New integration"
-
-| **Repository**      | Text     | Repository name               |   - Fill in details and enable capabilities:
-
-| **Repository URL**  | URL      | Direct link to repository     |     - ✅ Read content
-
-| **Status**          | Select   | Issue state (open/closed)     |     - ✅ Update content  
-
-| **Last Activity**   | Date     | Last update timestamp         |     - ✅ Insert content
-
-| **Assigned To**     | Text     | GitHub assignee information   |   - Copy the Internal Integration Token
-
-
-
-## 🚀 Setup Instructions2. **Create Notion Database**:
-
-   - Create a new database in Notion
-
-### Prerequisites   - Add the columns as specified in the table above
-
-- n8n instance (cloud or self-hosted)   - Share the database with your integration
-
+- n8n instance (cloud or self-hosted)
 - GitHub repository access
-
-- Notion workspace3. **Configure n8n Credentials**:
-
-- Google Gemini API access   - In n8n → Credentials → New Credential → Notion API
-
-   - Paste your integration token and save
+- Notion workspace
+- Google Gemini API access
 
 ### Step 1: GitHub API Setup
 
-### Step 4: Import and Configure Workflow
-
 1. **Generate Personal Access Token**:
-
-   - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)1. **Import Workflow**:
-
-   - Click "Generate new token (classic)"   - Download `Github issue to notion database page.json`
-
-   - Name: `n8n-integration`   - In n8n → Import from file
-
-   - Scopes: Select `repo` (full repository access)   - Select the JSON file
-
+   - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+   - Click "Generate new token (classic)"
+   - Name: `n8n-integration`
+   - Scopes: Select `repo` (full repository access)
    - Copy the generated token
 
-2. **Configure Nodes**:
-
-2. **Configure n8n Credentials**:   - **GitHub Trigger**: Select your credentials and repository
-
-   - In n8n → Credentials → New Credential → GitHub API   - **Google Gemini Chat Model**: Select your Gemini credentials
-
-   - Authentication method: Access Token   - **Notion Node**: Select your credentials and target database
-
+2. **Configure n8n Credentials**:
+   - In n8n → Credentials → New Credential → GitHub API
+   - Authentication method: Access Token
    - Paste your token and save
+
+### Step 2: Google Gemini API Setup
+
+1. **Get API Key**:
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+   - Create new API key
+   - Copy the key
+
+2. **Configure n8n Credentials**:
+   - In n8n → Credentials → New Credential → Google PaLM API
+   - Paste your API key and save
+
+### Step 3: Notion API Setup
+
+1. **Create Integration**:
+   - Go to [Notion Integrations](https://www.notion.com/my-integrations)
+   - Click "New integration"
+   - Fill in details and enable capabilities:
+     - ✅ Read content
+     - ✅ Update content  
+     - ✅ Insert content
+   - Copy the Internal Integration Token
+
+2. **Create Notion Database**:
+   - Create a new database in Notion
+   - Add the columns as specified in the table above
+   - Share the database with your integration
+
+3. **Configure n8n Credentials**:
+   - In n8n → Credentials → New Credential → Notion API
+   - Paste your integration token and save
+
+### Step 4: Import and Configure Workflow
+
+1. **Import Workflow**:
+   - Download `Github issue to notion database page.json`
+   - In n8n → Import from file
+   - Select the JSON file
+
+2. **Configure Nodes**:
+   - **GitHub Trigger**: Select your credentials and repository
+   - **Google Gemini Chat Model**: Select your Gemini credentials
+   - **Notion Node**: Select your credentials and target database
+
+3. **Activate Workflow**:
+   - Test the workflow with a sample issue
+   - Activate for continuous monitoring
+
+## 🎯 Features
+
+- **🤖 AI-Powered Summarization**: Intelligent analysis of issue content
+- **📊 Structured Data**: Consistent formatting for easy tracking
+- **🔄 Real-time Sync**: Automatic updates when issues change
+- **🏷️ Rich Metadata**: Repository info, timestamps, and assignee tracking
+- **📋 Action Items**: AI-extracted tasks and next steps
+- **🔗 Direct Links**: Quick access to original GitHub issues
+
+## 💡 Use Cases
+
+- **Project Management**: Centralize issue tracking across multiple repositories
+- **Team Coordination**: Keep stakeholders informed with AI summaries
+- **Sprint Planning**: Organized view of issues with action items
+- **Progress Tracking**: Monitor issue lifecycle and updates
+- **Documentation**: Maintain structured records of development tasks
+
+## 🛠️ Customization
+
+You can customize the workflow by:
+
+- **Modifying AI Prompts**: Adjust the summary style and focus areas
+- **Adding Fields**: Include additional GitHub metadata
+- **Filtering Issues**: Add conditions to process specific issue types
+- **Notification**: Connect to Slack, email, or other services
+
+## 📋 Troubleshooting
+
+**Common Issues:**
+
+1. **GitHub Webhook Not Triggering**:
+   - Verify repository permissions
+   - Check webhook URL in GitHub settings
+
+2. **Notion Pages Not Created**:
+   - Ensure database is shared with integration
+   - Verify column names match exactly
+
+3. **AI Responses Inconsistent**:
+   - Review and refine the prompt in AI Agent node
+   - Check Google Gemini API quota
+
+## Set up steps
+
+- Takes about **10–15 minutes** to set up  
+- You'll need:
+  - A **GitHub token** (for repo access)  
+  - A **Notion API token** (with database shared)  
+  - A **Google Gemini API key**  
+- Configure the **GitHub Trigger**, **AI Agent**, and **Notion Database node**  
+- Activate the workflow, and you're done 🚀  
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+⭐ **Star this repository** if you find it helpful! 
+
+💬 **Questions?** Open an issue or reach out to [AkilLabs](https://github.com/AkilLabs)
 
 3. **Activate Workflow**:
 
