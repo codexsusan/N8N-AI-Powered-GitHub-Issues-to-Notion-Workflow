@@ -1,0 +1,284 @@
+{
+  "name": "Github issue to notion database page",
+  "nodes": [
+    {
+      "parameters": {
+        "owner": {
+          "__rl": true,
+          "value": "AkilLabs",
+          "mode": "list",
+          "cachedResultName": "AkilLabs",
+          "cachedResultUrl": "https://github.com/AkilLabs"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "data-scraper-chat",
+          "mode": "list",
+          "cachedResultName": "data-scraper-chat",
+          "cachedResultUrl": "https://github.com/AkilLabs/data-scraper-chat"
+        },
+        "events": [
+          "issues"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        336
+      ],
+      "id": "634d0d20-f4d9-4049-a0f4-e480bece0e6e",
+      "name": "Github Trigger",
+      "webhookId": "e315d656-e076-4321-a5bb-b14dbd6d3a3d",
+      "credentials": {
+        "githubApi": {
+          "id": "Q2mI39H6QCU3VAX2",
+          "name": "GitHub account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Summarize the following GitHub issue in a clear, concise way for a task management dashboard.\nAlso, enrich the output with repository details for tracking in Notion.\n\nInput:\n\nIssue Title: {{ $json.body.issue.title }}\n\nIssue Body: {{ $json.body.issue.body }}\n\nRepository: {{ $json.body.repository.full_name }}\n\nRepository URL: {{ $json.body.repository.html_url }}\n\nIssue State: {{ $json.body.issue.state }}\n\nLast Activity: {{ $json.body.issue.updated_at }}\n\nAssignee: {{ $json.body.issue.assignee.login }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        336
+      ],
+      "id": "d7e74213-29a8-4e2d-889f-f2f7fe2e0fce",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        256,
+        672
+      ],
+      "id": "d99b540f-f092-4576-a748-55c1ebfcdd9f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "FlH3ofJyAaXUGLLu",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"summary\": \"Short summary of the issue\",\n  \"action_items\": \"Make the action item in the format on the comma and provide the action as short and simple\",\n  \"notes\": \"Any additional context\",\n  \"title\": \"Title of the issue\",\n  \"notion_properties\": {\n    \"repository\": \"{{ $json.body.repository.full_name }}\",\n    \"repository_url\": \"{{ $json.body.repository.html_url }}\",\n    \"status\": \"{{ $json.body.issue.state }}\",\n    \"last_activity\": \"{{ $json.body.issue.updated_at }}\",\n    \"pinned\": false,\n    \"assigned_to\": \"{{ $json.body.issue.assignee.login }}\"\n  }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        656
+      ],
+      "id": "e6cebb45-3afc-4c18-8a80-53d5fa5c55d9",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "77402963-ebb8-4a4d-a7a5-42e74c53333f",
+          "mode": "list",
+          "cachedResultName": "Assigned issues from GitHub",
+          "cachedResultUrl": "https://www.notion.so/77402963ebb84a4da7a542e74c53333f"
+        },
+        "title": "={{ $json.output.title }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Summary|rich_text",
+              "textContent": "={{ $json.output.summary }}"
+            },
+            {
+              "key": "Action Items|rich_text",
+              "richText": true,
+              "text": {
+                "text": [
+                  {
+                    "text": "={{ $json.output.action_items }}",
+                    "annotationUi": {}
+                  }
+                ]
+              }
+            },
+            {
+              "key": "Notes|rich_text",
+              "textContent": "={{ $json.output.notes }}"
+            },
+            {
+              "key": "Repository|rich_text",
+              "textContent": "={{ $json.output.notion_properties.repository }}"
+            },
+            {
+              "key": "Repository URL|url",
+              "urlValue": "={{ $json.output.notion_properties.repository_url }}"
+            },
+            {
+              "key": "Status|status",
+              "statusValue": "={{ $json.output.notion_properties.status }}"
+            },
+            {
+              "key": "Last Activity|date",
+              "includeTime": false,
+              "date": "={{ $json.output.notion_properties.last_activity }}"
+            },
+            {
+              "key": "Assigned To (GitHub)|rich_text",
+              "textContent": "={{ $json.output.notion_properties.assigned_to }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        336
+      ],
+      "id": "b85906e4-4891-4058-8071-a3ce4ed7eb3d",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "LcXVZqjajx9MYU3f",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Setting up GitHub API Credentials in n8n using an Access Token\n\n## 1. Generate a Personal Access Token on GitHub\n1. Go to your **GitHub account Settings**.  \n2. Navigate to:  \n   **Developer settings > Personal access tokens > Tokens (classic)**.  \n3. Click **\"Generate new token (classic)\"**.  \n4. Give your token a descriptive name (e.g., `n8n integration`).  \n5. Set the expiration and select the required scopes  \n   - For most n8n GitHub nodes, the **repo** scope is recommended.  \n6. Click **\"Generate token\"** and **copy the token**.\n\n---\n\n## 2. Set up the Credential in n8n\n1. In **n8n**, go to **Credentials**.  \n2. Click **\"New Credential\"** and select **\"GitHub API\"**.  \n3. Choose **\"Access Token\"** as the authentication method.  \n4. Paste your GitHub personal access token into the **Access Token** field.  \n5. Click **Save**.  \n",
+        "height": 624,
+        "width": 560,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "449169a8-db29-4b69-a171-e5f85535cc34",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Setting up Notion API Credentials in n8n\n\nYou can connect Notion to n8n using either an **Internal Integration (API Integration Token)** or a **Public Integration (OAuth2)**.\n\n---\n\n## 1. Internal Integration (API Integration Token)\n*Best for personal or workspace-specific automations.*\n\n1. Go to your [Notion integration dashboard](https://www.notion.com/my-integrations).  \n2. Click **\"+ New integration\"** and fill in the details (name, logo, etc.).  \n3. In the **Capabilities** tab, enable:\n   - Read content  \n   - Update content  \n   - Insert content  \n   - User information without email addresses  \n4. Save changes.  \n5. In the **Secrets** tab, copy the **Internal Integration Token**.  \n6. In **n8n**, create new **Notion credentials** and paste this token as the **Internal Integration Secret**.  \n7. ⚠️ **Important:** In Notion, share the relevant pages/databases with your integration (via the **Connections** menu on each page).  \n\n---\n\n## 2. Public Integration (OAuth2)\n*Best for apps used by multiple Notion workspaces.*\n\n1. Create a new integration as above, but in the **Distribution** tab, enable **\"Make this integration public\"**.  \n2. Enter your **organization info**.  \n3. Copy the **n8n OAuth Redirect URL** and add it as a **Redirect URI** in Notion.  \n4. In the **Secrets** tab, copy the **Client ID** and **Client Secret**.  \n5. In **n8n**, create new **Notion credentials** using **OAuth2** and enter the Client ID and Secret.  \n6. Complete the **OAuth2 flow** in n8n.  \n",
+        "height": 1008,
+        "width": 560,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        976,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "145e5e7f-f85c-4985-89f4-f6b5a2f65060",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Use Notion AI to instantly generate a dashboard with a single prompt.\n\n\n```json\n{\n  \"summary\": \"{{ $json.body.issue.title }} - Short summary of the issue\",\n  \"action_items\": \"{{ $json.body.issue.title }}, {{ $json.body.issue.state }}, {{ $json.body.issue.updated_at }}\",\n  \"notes\": \"Additional context from GitHub issue: {{ $json.body.issue.body }}\",\n  \"title\": \"GitHub Issue: {{ $json.body.issue.title }}\",\n  \"notion_properties\": {\n    \"repository\": \"{{ $json.body.repository.full_name }}\",\n    \"repository_url\": \"{{ $json.body.repository.html_url }}\",\n    \"status\": \"{{ $json.body.issue.state }}\",\n    \"last_activity\": \"{{ $json.body.issue.updated_at }}\",\n    \"pinned\": false,\n    \"assigned_to\": \"{{ $json.body.issue.assignee.login }}\"\n  }\n}\n```\n\n# Notion Database Setup\n\n\n| Column Name     | Type                                  |\n|-----------------|---------------------------------------|\n| Title           | Title (Title type)                   |\n| Summary         | Text                                 |\n| Action Items    | Text                                 |\n| Notes           | Text                                 |\n| Repository      | Text                                 |\n| Repository URL  | URL                                  |\n| Status          | Select                               |\n| Last Activity   | Date                                 |\n| Pinned          | Checkbox                             |\n| Assigned To     | People or Text (depending on use case) |\n",
+        "height": 736,
+        "width": 1072
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1824,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "f5004932-0ab1-490a-98e7-e2d969718702",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "\n",
+        "height": 1456,
+        "width": 2032,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -384,
+        -432
+      ],
+      "typeVersion": 1,
+      "id": "85fbe793-93b5-458a-a62f-0062ff6f6cd3",
+      "name": "Sticky Note4"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Github Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7b30aa55-a0f9-4ebd-8257-02dee9bba291",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "498dd19097f281cd404ce965f402e87502d7baa728dab9dd09f3fe98a22d6ef2"
+  },
+  "id": "PpgZojWs2pqsA93Q",
+  "tags": []
+}
